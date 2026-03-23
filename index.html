@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI採用管理 | DeepAI</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Noto Sans JP', sans-serif; background: #fff; color: #333; }
+
+  :root {
+    --primary: #AE2245;
+    --primary-dark: #8C2137;
+    --primary-darker: #7E1A2E;
+    --primary-light: #f8e8ec;
+    --primary-light2: #fdf2f5;
+    --warm-bg: #fdf2f5;
+    --text: #2d2a26;
+    --text-sub: #8a8078;
+    --border: #ecdde1;
+    --gradient: linear-gradient(135deg, #AE2245, #8C2137, #7E1A2E);
+  }
+
+  /* ===== NAV ===== */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(255,255,255,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(236,229,219,0.5);
+    padding: 0 48px; height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    font-size: 18px; font-weight: 900; color: var(--primary);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav-logo .dot {
+    width: 12px; height: 12px; border-radius: 50%; background: var(--gradient);
+  }
+  .nav-links { display: flex; gap: 32px; align-items: center; }
+  .nav-links a {
+    font-size: 14px; color: var(--text); text-decoration: none; font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--primary); }
+  .nav-cta {
+    background: var(--gradient); color: #fff !important;
+    padding: 10px 24px; border-radius: 30px; font-weight: 700 !important;
+    font-size: 13px !important;
+  }
+  .nav-cta:hover { opacity: 0.9; color: #fff !important; }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 120px 80px 80px;
+    background: var(--warm-bg);
+    position: relative; overflow: hidden;
+  }
+  .hero-inner {
+    display: flex; align-items: center; gap: 60px;
+    max-width: 1200px; margin: 0 auto; width: 100%;
+  }
+  .hero-text { flex: 0 0 480px; }
+  .hero-badge {
+    display: inline-block; background: var(--gradient); color: #fff;
+    padding: 6px 18px; border-radius: 20px;
+    font-size: 12px; font-weight: 700; letter-spacing: 1.5px; margin-bottom: 24px;
+  }
+  .hero-text h1 {
+    font-size: 48px; font-weight: 900; line-height: 1.3;
+    color: var(--text); margin-bottom: 20px;
+  }
+  .hero-text h1 span {
+    background: var(--gradient);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero-text p {
+    font-size: 17px; color: var(--text-sub); line-height: 1.9; margin-bottom: 32px;
+  }
+  .hero-cta {
+    display: inline-block; background: var(--gradient); color: #fff;
+    padding: 16px 40px; border-radius: 50px;
+    font-size: 16px; font-weight: 700; text-decoration: none;
+    box-shadow: 0 6px 24px rgba(174,34,69,0.25);
+    transition: transform 0.2s;
+  }
+  .hero-cta:hover { transform: translateY(-2px); }
+  .hero-visual { flex: 1; position: relative; }
+  .hero-visual .ss {
+    border-radius: 14px; overflow: hidden;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.08);
+    border: 1px solid var(--border);
+  }
+  .hero-visual .ss img { width: 100%; display: block; }
+  .hero-visual .hero-video {
+    border-radius: 14px; overflow: hidden;
+  }
+  .hero-visual .hero-video video {
+    width: 100%; display: block;
+    background: transparent;
+  }
+  .hero-deco {
+    position: absolute; border-radius: 50%;
+    background: var(--gradient); opacity: 0.06;
+  }
+
+  /* ===== SECTIONS ===== */
+  section { padding: 100px 80px; }
+  section.warm { background: var(--warm-bg); }
+  section.orange-bg { background: var(--primary-light2); }
+  .section-inner { max-width: 1200px; margin: 0 auto; }
+  .section-tag {
+    display: inline-block; font-size: 12px; font-weight: 800;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--primary); margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: 34px; font-weight: 900; color: var(--text);
+    line-height: 1.4; margin-bottom: 16px;
+  }
+  .section-lead {
+    font-size: 16px; color: var(--text-sub); line-height: 1.85;
+    margin-bottom: 48px; max-width: 700px;
+  }
+  .section-lead.center { text-align: center; margin-left: auto; margin-right: auto; }
+  .center { text-align: center; }
+
+  /* ===== SCREENSHOTS ===== */
+  .ss {
+    border-radius: 12px; overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.05);
+    background: #fff;
+  }
+  .ss img { width: 100%; display: block; }
+  .ss-cap { font-size: 12px; color: #bbb; margin-top: 10px; text-align: center; }
+
+  /* ===== GRIDS ===== */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+  .split { display: flex; gap: 56px; align-items: center; }
+  .split-text { flex: 0 0 420px; }
+  .split-visual { flex: 1; }
+
+  /* ===== FEATURE CARDS ===== */
+  .fcard {
+    background: #fff; border-radius: 14px;
+    padding: 28px; border: 1px solid var(--border);
+    transition: box-shadow 0.2s;
+  }
+  .fcard:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.06); }
+  .warm .fcard, .orange-bg .fcard { background: #fff; }
+  .fcard-icon {
+    width: 44px; height: 44px; border-radius: 11px;
+    background: var(--primary-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; margin-bottom: 14px;
+  }
+  .fcard h3 { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+  .fcard p { font-size: 14px; color: var(--text-sub); line-height: 1.75; }
+
+  /* ===== HIGHLIGHT LIST ===== */
+  .hlist { list-style: none; }
+  .hlist li {
+    padding: 12px 0; font-size: 15px; color: var(--text);
+    padding-left: 24px; position: relative; line-height: 1.7;
+    border-bottom: 1px solid #f0ebe4;
+  }
+  .hlist li:last-child { border-bottom: none; }
+  .hlist li::before {
+    content: ''; position: absolute; left: 0; top: 18px;
+    width: 10px; height: 10px; border-radius: 3px;
+    background: var(--gradient);
+  }
+
+  /* ===== INTERVIEWERS ===== */
+  .interviewers { display: flex; gap: 48px; justify-content: center; }
+  .interviewer { text-align: center; flex: 0 0 220px; }
+  .interviewer-img {
+    width: 160px; height: 160px; border-radius: 50%;
+    object-fit: cover; margin: 0 auto 16px; display: block;
+    border: 5px solid var(--primary-light);
+    box-shadow: 0 6px 20px rgba(174,34,69,0.12);
+  }
+  .interviewer h4 { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .interviewer p { font-size: 13px; color: var(--text-sub); line-height: 1.7; }
+  .ai-badge {
+    display: inline-block; background: var(--gradient); color: #fff;
+    padding: 4px 16px; border-radius: 14px;
+    font-size: 12px; font-weight: 700; margin-bottom: 12px;
+  }
+
+  /* ===== FEAT ROW ===== */
+  .feat-row {
+    display: flex; gap: 16px; padding: 16px 0;
+    border-bottom: 1px solid #f0ebe4; align-items: flex-start;
+  }
+  .feat-row:last-child { border-bottom: none; }
+  .feat-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: var(--primary-light); display: flex;
+    align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0; margin-top: 2px;
+  }
+  .feat-row h3 { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .feat-row p { font-size: 14px; color: var(--text-sub); line-height: 1.65; }
+
+  /* ===== FLOW BAR ===== */
+  .flow-row { display: flex; gap: 6px; margin-bottom: 12px; }
+  .flow-item {
+    flex: 1; text-align: center; padding: 16px 10px; border-radius: 10px;
+    font-size: 14px; font-weight: 700; color: #fff; line-height: 1.4;
+  }
+  .flow-item small { display: block; font-weight: 400; font-size: 12px; opacity: 0.85; margin-top: 3px; }
+  .fl-warm { background: #c4b8aa; }
+  .fl-orange { background: var(--primary); }
+  .fl-yellow { background: var(--primary-dark); }
+  .fl-green { background: #5cb87a; }
+
+  /* ===== CTA SECTION ===== */
+  .cta-section {
+    padding: 100px 80px;
+    background: var(--warm-bg);
+    text-align: center;
+  }
+  .cta-section h2 {
+    font-size: 38px; font-weight: 900; color: var(--text);
+    margin-bottom: 16px; line-height: 1.4;
+  }
+  .cta-section p {
+    font-size: 17px; color: var(--text-sub); line-height: 1.8; margin-bottom: 36px;
+  }
+  .cta-btn {
+    display: inline-block; background: var(--gradient); color: #fff;
+    padding: 18px 52px; border-radius: 50px;
+    font-size: 17px; font-weight: 700; text-decoration: none;
+    box-shadow: 0 6px 24px rgba(174,34,69,0.25);
+    transition: transform 0.2s;
+  }
+  .cta-btn:hover { transform: translateY(-2px); }
+
+  /* ===== FOOTER ===== */
+  footer {
+    padding: 40px 80px;
+    background: #fff;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 13px; color: #bbb;
+  }
+
+  /* ===== DARK SECTION ===== */
+  section.dark {
+    background: var(--primary-darker);
+    color: #fff;
+  }
+  section.dark .section-tag { color: rgba(255,255,255,0.5); }
+  section.dark .section-title { color: #fff; }
+  section.dark .section-lead { color: rgba(255,255,255,0.6); }
+  section.dark .ss {
+    border-color: rgba(255,255,255,0.1);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  }
+  section.dark .ss-cap { color: rgba(255,255,255,0.35); }
+  section.dark .feat-row { border-bottom-color: rgba(255,255,255,0.08); }
+  section.dark .feat-row h3 { color: #fff; }
+  section.dark .feat-row p { color: rgba(255,255,255,0.55); }
+  section.dark .feat-icon { background: rgba(255,255,255,0.1); }
+
+  .note {
+    font-size: 13px; color: var(--text-sub); margin-top: 16px;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo"><span class="dot"></span>AI採用管理</div>
+  <div class="nav-links">
+    <a href="#overview">概要</a>
+    <a href="#pipeline">パイプライン</a>
+    <a href="#ai-interview">AI面接</a>
+    <a href="#position">ポジション管理</a>
+    <a href="#evaluation">評価</a>
+    <a href="#features">機能一覧</a>
+    <a href="#contact" class="nav-cta">お問い合わせ</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="top">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <span class="hero-badge">AI RECRUITMENT SYSTEM</span>
+      <h1>採用面接を、<br><span>AIに任せる</span>時代へ。</h1>
+      <p>応募受付からAI面接・自動スコアリング・内定管理まで。<br>採用プロセスを一気通貫で管理するAIシステムです。</p>
+      <a href="#contact" class="hero-cta">デモを申し込む</a>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-video">
+        <video autoplay muted loop playsinline>
+          <source src="images/hero_video.webm" type="video/webm">
+        </video>
+      </div>
+    </div>
+  </div>
+  <div class="hero-deco" style="width:400px;height:400px;bottom:-150px;right:-100px;"></div>
+  <div class="hero-deco" style="width:280px;height:280px;top:-100px;left:-60px;"></div>
+</div>
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <div class="section-inner">
+    <div class="split">
+      <div class="split-text">
+        <span class="section-tag">SERVICE OVERVIEW</span>
+        <h2 class="section-title">採用プロセス全体を<br>1つのシステムで管理</h2>
+        <p style="font-size:15px;color:var(--text-sub);line-height:1.85;margin-bottom:28px;">
+          応募の受付からAI面接、スコアリング、内定管理まで。<br>採用に関わるすべてを一元管理できます。
+        </p>
+        <ul class="hlist">
+          <li>KPI（候補者数・応募数・通過率）をリアルタイム表示</li>
+          <li>ポジションごとの選考進捗を一画面で把握</li>
+          <li>求人媒体連携・CSV一括取込に対応</li>
+        </ul>
+      </div>
+      <div class="split-visual">
+        <div class="ss"><img src="images/dashboard.png" alt="ダッシュボード"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PIPELINE & CANDIDATE -->
+<section class="warm" id="pipeline">
+  <div class="section-inner">
+    <span class="section-tag">PIPELINE & CANDIDATE</span>
+    <h2 class="section-title">候補者の選考状況を一覧管理</h2>
+    <p class="section-lead">応募から入社まで7ステージをカンバンで管理。候補者をクリックすると詳細画面へ遷移し、選考タイムラインの確認やAI面接への進行がワンクリックで行えます。</p>
+    <div class="grid-2">
+      <div>
+        <div class="ss"><img src="images/pipeline.png" alt="パイプライン"></div>
+        <p class="ss-cap">候補者パイプライン（カンバン形式）</p>
+      </div>
+      <div>
+        <div class="ss"><img src="images/candidate_detail.png" alt="候補者詳細"></div>
+        <p class="ss-cap">候補者詳細 — 選考タイムライン・ステージ管理</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI INTERVIEWER -->
+<section id="ai-interview">
+  <div class="section-inner center">
+    <span class="section-tag">AI INTERVIEWER</span>
+    <h2 class="section-title">AIが面接官として候補者と対話</h2>
+    <p class="section-lead center">AIが面接官となり、候補者と自然な対話形式で面接を実施。<br>24時間いつでも受験可能で、日程調整の手間がなくなります。</p>
+    <div class="interviewers">
+      <div class="interviewer">
+        <span class="ai-badge">AI面接官</span>
+        <img class="interviewer-img" src="images/interviewer1.jpeg" alt="AI面接官1">
+        <h4>基本適性面接</h4>
+        <p>自己紹介・前職経験・<br>志望動機・強み弱み</p>
+      </div>
+      <div class="interviewer">
+        <span class="ai-badge">AI面接官</span>
+        <img class="interviewer-img" src="images/interviewer2.png" alt="AI面接官2">
+        <h4>課題解決力面接</h4>
+        <p>ケース問題・成功事例・<br>チームMG・リーダーシップ</p>
+      </div>
+      <div class="interviewer">
+        <span class="ai-badge">AI面接官</span>
+        <img class="interviewer-img" src="images/interviewer3.png" alt="AI面接官3">
+        <h4>技術面接</h4>
+        <p>技術スキル・設計思想・<br>問題解決アプローチ</p>
+      </div>
+    </div>
+    <p class="note">&#8251; 面接の質問内容・評価基準・合格ラインはポジションごとに自由にカスタマイズ可能</p>
+  </div>
+</section>
+
+<!-- POSITION MANAGEMENT -->
+<section class="warm" id="position">
+  <div class="section-inner">
+    <span class="section-tag">POSITION MANAGEMENT</span>
+    <h2 class="section-title">ポジションごとに選考フローを自由に設計</h2>
+    <p class="section-lead">職種に応じて選考ステップを柔軟にカスタマイズ。AI面接のシナリオや評価基準もポジション単位で設定できます。</p>
+    <div class="grid-2">
+      <div>
+        <div class="ss"><img src="images/position_list.png" alt="ポジション一覧"></div>
+        <p class="ss-cap">ポジション一覧 — 職種ごとの選考フロー</p>
+      </div>
+      <div>
+        <div class="ss"><img src="images/position_detail.png" alt="ポジション詳細"></div>
+        <p class="ss-cap">ポジション詳細 — AI面接シナリオ・評価基準の統合設定</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI EVALUATION -->
+<section class="dark" id="evaluation">
+  <div class="section-inner">
+    <span class="section-tag">AI EVALUATION</span>
+    <h2 class="section-title">AI面接の設定から評価結果まで</h2>
+    <p class="section-lead">質問内容・評価基準を自由にカスタマイズ。AI面接後は5つの評価軸でスコアリングされた結果と改善点が自動生成されます。</p>
+    <div class="grid-2" style="margin-bottom:40px;">
+      <div>
+        <div class="ss"><img src="images/scenario_setting.png" alt="シナリオ設定"></div>
+        <p class="ss-cap">AI面接シナリオ設定画面</p>
+      </div>
+      <div>
+        <div class="ss"><img src="images/evaluation.png" alt="評価結果"></div>
+        <p class="ss-cap">AI評価結果 — 5軸レーダーチャート</p>
+      </div>
+    </div>
+    <div class="grid-2" style="gap:40px;">
+      <div style="display:flex;flex-direction:column;gap:0;">
+        <div class="feat-row">
+          <div class="feat-icon">&#9881;&#65039;</div>
+          <div>
+            <h3>質問・評価基準をカスタマイズ</h3>
+            <p>質問リスト・評価項目・ウェイト・合格ラインを自由に設定。</p>
+          </div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-icon">&#128202;</div>
+          <div>
+            <h3>5軸で自動スコアリング</h3>
+            <p>明瞭性・語彙力・論理性・対話力・態度マナーで100点満点評価。</p>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:0;">
+        <div class="feat-row">
+          <div class="feat-icon">&#128172;</div>
+          <div>
+            <h3>良い点・改善点を自動生成</h3>
+            <p>AIが面接内容を分析し、フィードバックコメントを自動で作成。</p>
+          </div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-icon">&#127908;</div>
+          <div>
+            <h3>音声・映像評価にも対応</h3>
+            <p>テキストに加え、音声・映像での多角的評価が可能。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SELECTION FLOW + FEATURES -->
+<section class="orange-bg" id="features">
+  <div class="section-inner">
+    <span class="section-tag">SELECTION FLOW</span>
+    <h2 class="section-title">職種に応じた選考フロー例</h2>
+
+    <div style="margin-bottom:28px;">
+      <p style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:12px;">営業マネージャー</p>
+      <div class="flow-row">
+        <div class="flow-item fl-warm">書類選考</div>
+        <div class="flow-item fl-orange">1次AI面接<small>基本適性</small></div>
+        <div class="flow-item fl-orange">2次AI面接<small>課題解決力</small></div>
+        <div class="flow-item fl-yellow">最終面接</div>
+        <div class="flow-item fl-green">内定</div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:48px;">
+      <p style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:12px;">Webエンジニア</p>
+      <div class="flow-row">
+        <div class="flow-item fl-warm">書類選考</div>
+        <div class="flow-item fl-warm">技術テスト</div>
+        <div class="flow-item fl-orange">AI面接</div>
+        <div class="flow-item fl-yellow">最終面接</div>
+        <div class="flow-item fl-green">内定</div>
+      </div>
+      <p class="note">&#8251; フローの構成・AI面接の回数はポジション単位で自由にカスタマイズ可能</p>
+    </div>
+
+    <h3 style="font-size:22px;font-weight:800;margin-bottom:24px;color:var(--text);">その他の主な機能</h3>
+    <div class="grid-3">
+      <div class="fcard">
+        <div class="fcard-icon">&#128200;</div>
+        <h3>採用分析</h3>
+        <p>応募数推移・選考ファネル・スコア分布など、採用データを多角的に分析</p>
+      </div>
+      <div class="fcard">
+        <div class="fcard-icon">&#128197;</div>
+        <h3>面接カレンダー</h3>
+        <p>面接日程を一元管理。候補者・面接官のスケジュールを可視化</p>
+      </div>
+      <div class="fcard">
+        <div class="fcard-icon">&#128279;</div>
+        <h3>求人媒体連携</h3>
+        <p>外部求人媒体からの応募者データを自動取込</p>
+      </div>
+      <div class="fcard">
+        <div class="fcard-icon">&#9993;</div>
+        <h3>メール設定</h3>
+        <p>選考ステージに応じた自動通知・メールテンプレート管理</p>
+      </div>
+      <div class="fcard">
+        <div class="fcard-icon">&#128101;</div>
+        <h3>応募者管理</h3>
+        <p>候補者情報の検索・フィルタ・CSV一括取込に対応</p>
+      </div>
+      <div class="fcard">
+        <div class="fcard-icon">&#127919;</div>
+        <h3>内定管理</h3>
+        <p>オファーから入社手続きまでシームレスに管理</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section" id="contact">
+  <h2>まずはデモでお試しください</h2>
+  <p>貴社の採用フローに合わせたデモをご用意いたします。<br>お気軽にお問い合わせください。</p>
+  <a href="#" class="cta-btn">デモのお申し込み</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>&copy; 2026 DeepAI Inc. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
