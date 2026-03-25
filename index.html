@@ -6,285 +6,247 @@
 <title>AI採用管理 | DeepAI</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700;900&display=swap');
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    font-family: 'Noto Sans JP', sans-serif;
-    background: #fff; color: #1a1a1a;
-    font-feature-settings: "palt";
-    -webkit-font-smoothing: antialiased;
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Noto Sans JP',sans-serif;
+    background:#fff;color:#1a1a1a;
+    font-feature-settings:"palt";
+    -webkit-font-smoothing:antialiased;
+    line-height:1.8;font-size:16px;
   }
 
-  :root {
-    --c1: #AE2245;
-    --c2: #8C2137;
-    --c3: #7E1A2E;
-    --c-light: #faf0f2;
-    --c-light2: #f5e4e8;
-    --gray-bg: #f7f6f4;
-    --text: #1a1a1a;
-    --text2: #555;
-    --text3: #999;
-    --border: #e8e6e3;
-    --gradient: linear-gradient(135deg, #AE2245, #7E1A2E);
+  :root{
+    --c1:#AE2245;--c2:#8C2137;--c3:#7E1A2E;
+    --c-bg:#fdf2f4;--c-bg2:#f9e8ec;
+    --gray:#f5f4f2;--dark:#2e2b28;--dark2:#3d3a36;
+    --t1:#1a1a1a;--t2:#555;--t3:#999;
+    --r:20px;
   }
 
   /* ===== NAV ===== */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    background: rgba(255,255,255,0.95); backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(0,0,0,0.06);
-    height: 60px; display: flex; align-items: center;
-    padding: 0 40px; justify-content: space-between;
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(255,255,255,0.96);backdrop-filter:blur(20px);
+    border-bottom:1px solid rgba(0,0,0,0.05);
+    height:64px;display:flex;align-items:center;
+    padding:0 48px;justify-content:space-between;
   }
-  .n-logo {
-    font-size: 15px; font-weight: 700; color: var(--c1);
-    text-decoration: none; letter-spacing: 0.5px;
+  .n-logo{font-size:16px;font-weight:800;color:var(--c1);text-decoration:none;}
+  .n-right{display:flex;gap:32px;align-items:center;}
+  .n-right a{font-size:14px;color:var(--t2);text-decoration:none;font-weight:500;}
+  .n-right a:hover{color:var(--c1);}
+  .n-btn{
+    background:var(--c1)!important;color:#fff!important;
+    padding:10px 28px;border-radius:50px;font-weight:600!important;
   }
-  .n-links { display: flex; gap: 28px; align-items: center; }
-  .n-links a {
-    font-size: 13px; color: var(--text2); text-decoration: none;
-    font-weight: 500; transition: color 0.2s;
-  }
-  .n-links a:hover { color: var(--c1); }
-  .n-cta {
-    background: var(--c1) !important; color: #fff !important;
-    padding: 8px 22px; border-radius: 6px; font-weight: 600 !important;
-    transition: background 0.2s;
-  }
-  .n-cta:hover { background: var(--c2) !important; }
-  .hamburger {
-    display: none; background: none; border: none; cursor: pointer;
-    width: 28px; height: 20px; position: relative; z-index: 200;
-  }
-  .hamburger span {
-    display: block; width: 100%; height: 2px; background: var(--text);
-    position: absolute; left: 0; transition: 0.3s;
-  }
-  .hamburger span:nth-child(1) { top: 0; }
-  .hamburger span:nth-child(2) { top: 9px; }
-  .hamburger span:nth-child(3) { top: 18px; }
-  .hamburger.open span:nth-child(1) { top: 9px; transform: rotate(45deg); }
-  .hamburger.open span:nth-child(2) { opacity: 0; }
-  .hamburger.open span:nth-child(3) { top: 9px; transform: rotate(-45deg); }
+  .n-btn:hover{background:var(--c2)!important;}
+  .ham{display:none;background:none;border:none;cursor:pointer;width:28px;height:20px;position:relative;z-index:200;}
+  .ham span{display:block;width:100%;height:2px;background:var(--t1);position:absolute;left:0;transition:.3s;}
+  .ham span:nth-child(1){top:0;}.ham span:nth-child(2){top:9px;}.ham span:nth-child(3){top:18px;}
+  .ham.open span:nth-child(1){top:9px;transform:rotate(45deg);}
+  .ham.open span:nth-child(2){opacity:0;}
+  .ham.open span:nth-child(3){top:9px;transform:rotate(-45deg);}
 
   /* ===== HERO ===== */
-  .hero {
-    padding: 160px 40px 100px;
-    text-align: center;
-    background: var(--gray-bg);
-    position: relative;
+  .hero{
+    min-height:100vh;display:flex;flex-direction:column;
+    justify-content:center;align-items:center;
+    padding:140px 48px 80px;text-align:center;
+    background:var(--gray);position:relative;overflow:hidden;
   }
-  .hero-inner { max-width: 800px; margin: 0 auto; }
-  .hero h1 {
-    font-size: 52px; font-weight: 900; line-height: 1.35;
-    color: var(--text); margin-bottom: 24px;
-    letter-spacing: -0.5px;
+  .hero h1{
+    font-size:56px;font-weight:900;line-height:1.3;
+    letter-spacing:-1px;margin-bottom:24px;
   }
-  .hero h1 em {
-    font-style: normal; color: var(--c1);
+  .hero h1 em{font-style:normal;color:var(--c1);}
+  .hero .sub{font-size:18px;color:var(--t2);line-height:2;margin-bottom:40px;max-width:600px;}
+  .hero-btns{display:flex;gap:16px;justify-content:center;margin-bottom:64px;}
+  .btn-l{
+    display:inline-flex;align-items:center;justify-content:center;
+    height:60px;padding:0 40px;border-radius:50px;
+    font-size:16px;font-weight:600;text-decoration:none;transition:.2s;
   }
-  .hero p {
-    font-size: 17px; color: var(--text2); line-height: 1.9;
-    margin-bottom: 40px;
+  .btn-fill{background:var(--c1);color:#fff;box-shadow:0 8px 32px rgba(174,34,69,0.2);}
+  .btn-fill:hover{background:var(--c2);transform:translateY(-1px);}
+  .btn-out{border:2px solid var(--c1);color:var(--c1);background:transparent;}
+  .btn-out:hover{background:var(--c-bg);}
+  .hero-vid{
+    width:100%;max-width:1000px;border-radius:var(--r);overflow:hidden;
+    box-shadow:0 24px 64px rgba(0,0,0,0.08);
   }
-  .hero-actions { display: flex; gap: 16px; justify-content: center; align-items: center; }
-  .btn-primary {
-    display: inline-block; background: var(--c1); color: #fff;
-    padding: 14px 36px; border-radius: 6px;
-    font-size: 15px; font-weight: 600; text-decoration: none;
-    transition: background 0.2s;
-  }
-  .btn-primary:hover { background: var(--c2); }
-  .btn-secondary {
-    display: inline-block; color: var(--c1); border: 1.5px solid var(--c1);
-    padding: 13px 36px; border-radius: 6px;
-    font-size: 15px; font-weight: 600; text-decoration: none;
-    transition: all 0.2s;
-  }
-  .btn-secondary:hover { background: var(--c-light); }
-  .hero-video-wrap {
-    max-width: 960px; margin: 56px auto 0;
-    border-radius: 12px; overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.08);
-  }
-  .hero-video-wrap video { width: 100%; display: block; }
+  .hero-vid video{width:100%;display:block;}
 
   /* ===== SECTION ===== */
-  section { padding: 100px 40px; }
-  .sec-white { background: #fff; }
-  .sec-gray { background: var(--gray-bg); }
-  .sec-dark { background: var(--c3); color: #fff; }
-  .sec-inner { max-width: 1080px; margin: 0 auto; }
-  .sec-header { margin-bottom: 56px; }
-  .sec-header.center { text-align: center; }
-  .sec-tag {
-    font-size: 12px; font-weight: 700; letter-spacing: 2px;
-    text-transform: uppercase; color: var(--c1); margin-bottom: 12px;
-    display: block;
-  }
-  .sec-dark .sec-tag { color: rgba(255,255,255,0.45); }
-  .sec-title {
-    font-size: 32px; font-weight: 800; line-height: 1.45;
-    color: var(--text); letter-spacing: -0.3px;
-  }
-  .sec-dark .sec-title { color: #fff; }
-  .sec-desc {
-    font-size: 15px; color: var(--text2); line-height: 1.9;
-    margin-top: 16px; max-width: 640px;
-  }
-  .sec-header.center .sec-desc { margin-left: auto; margin-right: auto; }
-  .sec-dark .sec-desc { color: rgba(255,255,255,0.6); }
+  .s{padding:120px 48px;}
+  .s-w{background:#fff;}
+  .s-g{background:var(--gray);}
+  .s-c{background:var(--c-bg);}
+  .s-d{background:var(--dark);color:#fff;}
+  .s-in{max-width:1120px;margin:0 auto;}
 
-  /* ===== SCREENSHOTS ===== */
-  .ss {
-    border-radius: 10px; overflow: hidden;
-    border: 1px solid var(--border);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+  .s-head{margin-bottom:64px;}
+  .s-head.c{text-align:center;}
+  .s-tag{
+    display:inline-block;font-size:13px;font-weight:700;
+    letter-spacing:1.5px;text-transform:uppercase;
+    color:var(--c1);margin-bottom:14px;
   }
-  .sec-dark .ss { border-color: rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
-  .ss img { width: 100%; display: block; }
-  .ss-label { font-size: 12px; color: var(--text3); margin-top: 10px; }
-  .sec-dark .ss-label { color: rgba(255,255,255,0.35); }
+  .s-d .s-tag{color:rgba(255,255,255,0.4);}
+  .s-t{font-size:40px;font-weight:800;line-height:1.35;letter-spacing:-0.5px;}
+  .s-d .s-t{color:#fff;}
+  .s-sub{font-size:16px;color:var(--t2);margin-top:20px;max-width:600px;line-height:1.9;}
+  .s-head.c .s-sub{margin-left:auto;margin-right:auto;}
+  .s-d .s-sub{color:rgba(255,255,255,0.6);}
 
-  /* ===== LAYOUT ===== */
-  .row { display: flex; gap: 48px; align-items: center; }
-  .row-reverse { flex-direction: row-reverse; }
-  .row .col-text { flex: 0 0 400px; }
-  .row .col-visual { flex: 1; }
-  .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
-  .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+  /* ===== CARDS ===== */
+  .card{
+    background:#fff;border-radius:var(--r);overflow:hidden;
+    box-shadow:0 8px 24px rgba(0,0,0,0.04);
+    transition:box-shadow .3s,transform .3s;
+  }
+  .card:hover{box-shadow:0 16px 48px rgba(0,0,0,0.08);transform:translateY(-4px);}
+  .s-d .card{background:rgba(255,255,255,0.06);box-shadow:0 8px 24px rgba(0,0,0,0.15);}
+  .s-d .card:hover{box-shadow:0 16px 48px rgba(0,0,0,0.25);}
+  .card-img{width:100%;display:block;}
+  .card-body{padding:28px 32px;}
+  .card-body h3{font-size:18px;font-weight:700;margin-bottom:8px;}
+  .s-d .card-body h3{color:#fff;}
+  .card-body p{font-size:14px;color:var(--t2);line-height:1.8;}
+  .s-d .card-body p{color:rgba(255,255,255,0.55);}
 
-  /* ===== FEATURE LIST ===== */
-  .f-list { list-style: none; margin-top: 28px; }
-  .f-list li {
-    padding: 14px 0; font-size: 15px; color: var(--text);
-    padding-left: 20px; position: relative; line-height: 1.75;
-    border-bottom: 1px solid var(--border);
+  /* ===== LARGE CARD (image + text side by side) ===== */
+  .card-h{
+    display:grid;grid-template-columns:1fr 1fr;
+    background:#fff;border-radius:var(--r);overflow:hidden;
+    box-shadow:0 8px 24px rgba(0,0,0,0.04);
   }
-  .f-list li:last-child { border-bottom: none; }
-  .f-list li::before {
-    content: ''; position: absolute; left: 0; top: 20px;
-    width: 8px; height: 8px; border-radius: 2px;
-    background: var(--c1);
+  .card-h:hover{box-shadow:0 16px 48px rgba(0,0,0,0.08);}
+  .card-h .card-img-wrap{overflow:hidden;}
+  .card-h .card-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
+  .card-h .card-content{padding:48px 40px;display:flex;flex-direction:column;justify-content:center;}
+  .card-h .card-content h3{font-size:24px;font-weight:800;margin-bottom:16px;line-height:1.4;}
+  .card-h .card-content p{font-size:15px;color:var(--t2);line-height:1.9;}
+  .card-h .card-content .tag-sm{
+    display:inline-block;font-size:12px;font-weight:700;
+    color:var(--c1);margin-bottom:12px;letter-spacing:1px;
   }
+
+  /* ===== GRIDS ===== */
+  .g2{display:grid;grid-template-columns:1fr 1fr;gap:32px;}
+  .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+
+  /* ===== ROW ===== */
+  .row{display:flex;gap:64px;align-items:center;}
+  .row-r{flex-direction:row-reverse;}
+  .row .txt{flex:0 0 420px;}
+  .row .vis{flex:1;}
 
   /* ===== INTERVIEWERS ===== */
-  .iv-grid { display: flex; gap: 48px; justify-content: center; }
-  .iv-card { text-align: center; width: 220px; }
-  .iv-img {
-    width: 140px; height: 140px; border-radius: 50%;
-    object-fit: cover; margin: 0 auto 16px; display: block;
-    border: 3px solid var(--c-light2);
+  .iv{display:flex;gap:56px;justify-content:center;}
+  .iv-c{text-align:center;width:220px;}
+  .iv-c img{
+    width:160px;height:160px;border-radius:50%;
+    object-fit:cover;display:block;margin:0 auto 20px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.06);
   }
-  .iv-badge {
-    display: inline-block; background: var(--c1); color: #fff;
-    padding: 3px 14px; border-radius: 4px;
-    font-size: 11px; font-weight: 700; margin-bottom: 12px;
+  .iv-tag{
+    display:inline-block;background:var(--c1);color:#fff;
+    padding:4px 16px;border-radius:50px;
+    font-size:11px;font-weight:700;margin-bottom:14px;
   }
-  .iv-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
-  .iv-card p { font-size: 13px; color: var(--text2); line-height: 1.7; }
+  .iv-c h4{font-size:16px;font-weight:700;margin-bottom:6px;}
+  .iv-c p{font-size:13px;color:var(--t2);line-height:1.8;}
 
-  /* ===== FEATURE CARDS ===== */
-  .fc {
-    padding: 28px; border-radius: 10px;
-    border: 1px solid var(--border); background: #fff;
-    transition: box-shadow 0.2s;
+  /* ===== FEATURE ICON CARDS ===== */
+  .ic{
+    padding:36px;border-radius:var(--r);
+    background:#fff;
+    box-shadow:0 4px 16px rgba(0,0,0,0.03);
+    transition:box-shadow .3s,transform .3s;
   }
-  .fc:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.05); }
-  .sec-dark .fc { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08); }
-  .sec-dark .fc:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
-  .fc-icon {
-    font-size: 24px; margin-bottom: 14px; display: block;
-  }
-  .fc h3 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
-  .sec-dark .fc h3 { color: #fff; }
-  .fc p { font-size: 13px; color: var(--text2); line-height: 1.75; }
-  .sec-dark .fc p { color: rgba(255,255,255,0.55); }
+  .ic:hover{box-shadow:0 12px 32px rgba(0,0,0,0.06);transform:translateY(-3px);}
+  .ic-i{font-size:28px;margin-bottom:16px;display:block;}
+  .ic h3{font-size:16px;font-weight:700;margin-bottom:10px;}
+  .ic p{font-size:14px;color:var(--t2);line-height:1.8;}
 
-  /* ===== FEAT ROW ===== */
-  .fr { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
-  .fr:last-child { border-bottom: none; }
-  .fr-icon {
-    width: 36px; height: 36px; border-radius: 8px;
-    background: rgba(255,255,255,0.08); display: flex;
-    align-items: center; justify-content: center;
-    font-size: 18px; flex-shrink: 0;
-  }
-  .fr h3 { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 3px; }
-  .fr p { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+  /* ===== DARK CARDS (eval) ===== */
+  .s-d .ic{background:rgba(255,255,255,0.05);box-shadow:none;}
+  .s-d .ic:hover{background:rgba(255,255,255,0.08);}
+  .s-d .ic h3{color:#fff;}
+  .s-d .ic p{color:rgba(255,255,255,0.55);}
 
   /* ===== FLOW ===== */
-  .flow { display: flex; gap: 4px; margin-bottom: 12px; }
-  .flow-s {
-    flex: 1; text-align: center; padding: 14px 8px; border-radius: 8px;
-    font-size: 13px; font-weight: 600; color: #fff; line-height: 1.4;
+  .flow{display:flex;gap:6px;margin-bottom:14px;}
+  .fl{
+    flex:1;text-align:center;padding:16px 8px;border-radius:12px;
+    font-size:14px;font-weight:600;color:#fff;line-height:1.4;
   }
-  .flow-s small { display: block; font-weight: 400; font-size: 11px; opacity: 0.8; margin-top: 2px; }
-  .fl-g { background: #bbb; }
-  .fl-c1 { background: var(--c1); }
-  .fl-c2 { background: var(--c2); }
-  .fl-gr { background: #3d9970; }
+  .fl small{display:block;font-weight:400;font-size:12px;opacity:.8;margin-top:3px;}
+  .fl-0{background:#c4bdb4;}.fl-1{background:var(--c1);}
+  .fl-2{background:var(--c2);}.fl-3{background:#3d9970;}
+
+  /* ===== LIST ===== */
+  .flist{list-style:none;margin-top:24px;}
+  .flist li{
+    padding:14px 0 14px 24px;font-size:15px;position:relative;
+    border-bottom:1px solid #eee;line-height:1.75;
+  }
+  .flist li:last-child{border-bottom:none;}
+  .flist li::before{
+    content:'';position:absolute;left:0;top:20px;
+    width:8px;height:8px;border-radius:50%;background:var(--c1);
+  }
 
   /* ===== CTA ===== */
-  .cta {
-    padding: 100px 40px; text-align: center;
-    background: var(--c-light);
-  }
-  .cta h2 {
-    font-size: 32px; font-weight: 800; color: var(--text);
-    margin-bottom: 16px;
-  }
-  .cta p { font-size: 16px; color: var(--text2); line-height: 1.8; margin-bottom: 32px; }
+  .cta{padding:120px 48px;text-align:center;background:var(--c-bg);}
+  .cta h2{font-size:36px;font-weight:800;margin-bottom:20px;}
+  .cta p{font-size:17px;color:var(--t2);margin-bottom:40px;line-height:1.9;}
 
   /* ===== FOOTER ===== */
-  footer {
-    padding: 32px 40px; text-align: center;
-    border-top: 1px solid var(--border);
-    font-size: 12px; color: var(--text3);
-  }
+  footer{padding:40px 48px;text-align:center;border-top:1px solid #eee;font-size:13px;color:var(--t3);}
 
   /* ===== RESPONSIVE ===== */
-  @media (max-width: 1024px) {
-    .row { flex-direction: column; gap: 36px; }
-    .row-reverse { flex-direction: column; }
-    .row .col-text { flex: none; width: 100%; }
-    .hero h1 { font-size: 38px; }
-    .sec-title { font-size: 26px; }
-    .iv-grid { gap: 32px; }
-    .iv-card { width: 180px; }
-    .iv-img { width: 120px; height: 120px; }
+  @media(max-width:1024px){
+    .hero h1{font-size:40px;}
+    .s-t{font-size:32px;}
+    .row,.row-r{flex-direction:column;gap:40px;}
+    .row .txt{flex:none;width:100%;}
+    .card-h{grid-template-columns:1fr;}
+    .iv{gap:36px;}
+    .iv-c{width:180px;}
+    .iv-c img{width:130px;height:130px;}
   }
-
-  @media (max-width: 768px) {
-    nav { padding: 0 20px; }
-    .n-links {
-      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(255,255,255,0.98); backdrop-filter: blur(12px);
-      flex-direction: column; align-items: center; justify-content: center;
-      gap: 24px; z-index: 150;
+  @media(max-width:768px){
+    nav{padding:0 20px;}
+    .n-right{
+      display:none;position:fixed;top:0;left:0;right:0;bottom:0;
+      background:rgba(255,255,255,0.98);backdrop-filter:blur(16px);
+      flex-direction:column;align-items:center;justify-content:center;
+      gap:28px;z-index:150;
     }
-    .n-links.open { display: flex; }
-    .n-links a { font-size: 17px; }
-    .hamburger { display: block; }
-    section { padding: 64px 20px; }
-    .hero { padding: 120px 20px 64px; }
-    .hero h1 { font-size: 28px; }
-    .hero p { font-size: 15px; }
-    .hero-actions { flex-direction: column; }
-    .btn-primary, .btn-secondary { width: 100%; text-align: center; }
-    .hero-video-wrap { margin-top: 36px; }
-    .sec-title { font-size: 22px; }
-    .sec-desc { font-size: 14px; }
-    .g2 { grid-template-columns: 1fr; }
-    .g3 { grid-template-columns: 1fr; }
-    .iv-grid { flex-direction: column; align-items: center; }
-    .iv-card { width: 100%; max-width: 260px; }
-    .flow { flex-wrap: wrap; }
-    .flow-s { flex: 0 0 calc(50% - 2px); }
-    .cta { padding: 64px 20px; }
-    .cta h2 { font-size: 24px; }
-    footer { padding: 24px 20px; }
+    .n-right.open{display:flex;}
+    .n-right a{font-size:18px;}
+    .ham{display:block;}
+    .s{padding:72px 20px;}
+    .hero{padding:120px 20px 60px;min-height:auto;}
+    .hero h1{font-size:30px;letter-spacing:0;}
+    .hero .sub{font-size:15px;}
+    .hero-btns{flex-direction:column;align-items:center;}
+    .btn-l{width:100%;max-width:320px;}
+    .hero-vid{border-radius:12px;}
+    .s-t{font-size:26px;}
+    .s-sub{font-size:14px;}
+    .s-head{margin-bottom:40px;}
+    .g2,.g3{grid-template-columns:1fr;gap:20px;}
+    .iv{flex-direction:column;align-items:center;gap:36px;}
+    .iv-c{width:100%;max-width:280px;}
+    .flow{flex-wrap:wrap;}
+    .fl{flex:0 0 calc(50% - 3px);font-size:12px;padding:12px 6px;}
+    .card-h .card-content{padding:28px 24px;}
+    .card-h .card-content h3{font-size:20px;}
+    .cta{padding:72px 20px;}
+    .cta h2{font-size:26px;}
   }
 </style>
 </head>
@@ -292,30 +254,28 @@
 
 <nav>
   <a href="#" class="n-logo">AI採用管理</a>
-  <button class="hamburger" onclick="this.classList.toggle('open');document.querySelector('.n-links').classList.toggle('open');">
+  <button class="ham" onclick="this.classList.toggle('open');document.querySelector('.n-right').classList.toggle('open');">
     <span></span><span></span><span></span>
   </button>
-  <div class="n-links">
+  <div class="n-right">
     <a href="#overview" onclick="closeMenu()">概要</a>
     <a href="#pipeline" onclick="closeMenu()">パイプライン</a>
     <a href="#ai-interview" onclick="closeMenu()">AI面接</a>
     <a href="#evaluation" onclick="closeMenu()">評価</a>
     <a href="#features" onclick="closeMenu()">機能一覧</a>
-    <a href="#contact" class="n-cta" onclick="closeMenu()">お問い合わせ</a>
+    <a href="#contact" class="n-btn" onclick="closeMenu()">お問い合わせ</a>
   </div>
 </nav>
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-inner">
-    <h1>採用面接を、<br><em>AIに任せる</em>時代へ。</h1>
-    <p>応募受付からAI面接・自動スコアリング・内定管理まで。<br>採用プロセスを一気通貫で管理する、AI採用管理システムです。</p>
-    <div class="hero-actions">
-      <a href="#contact" class="btn-primary">デモを申し込む</a>
-      <a href="#overview" class="btn-secondary">詳しく見る</a>
-    </div>
+  <h1>採用面接を、<br><em>AIに任せる</em>時代へ。</h1>
+  <p class="sub">応募受付からAI面接・自動スコアリング・内定管理まで。<br>採用プロセスを一気通貫で管理するAI採用管理システム。</p>
+  <div class="hero-btns">
+    <a href="#contact" class="btn-l btn-fill">デモを申し込む</a>
+    <a href="#overview" class="btn-l btn-out">詳しく見る</a>
   </div>
-  <div class="hero-video-wrap">
+  <div class="hero-vid">
     <video autoplay muted loop playsinline>
       <source src="images/hero_video.webm" type="video/webm">
     </video>
@@ -323,102 +283,102 @@
 </div>
 
 <!-- OVERVIEW -->
-<section class="sec-white" id="overview">
-  <div class="sec-inner">
-    <div class="row">
-      <div class="col-text">
-        <div class="sec-header">
-          <span class="sec-tag">Overview</span>
-          <h2 class="sec-title">採用プロセス全体を<br>1つのシステムで管理</h2>
-          <p class="sec-desc">応募の受付からAI面接、スコアリング、内定管理まで。採用に関わるすべてを一元管理できます。</p>
-        </div>
-        <ul class="f-list">
-          <li>KPI（候補者数・応募数・通過率）をリアルタイム表示</li>
-          <li>ポジションごとの選考進捗を一画面で把握</li>
-          <li>求人媒体連携・CSV一括取込に対応</li>
-        </ul>
+<section class="s s-w" id="overview">
+  <div class="s-in">
+    <div class="card-h">
+      <div class="card-img-wrap">
+        <img src="images/dashboard.png" alt="ダッシュボード">
       </div>
-      <div class="col-visual">
-        <div class="ss"><img src="images/dashboard.png" alt="ダッシュボード"></div>
+      <div class="card-content">
+        <span class="tag-sm">OVERVIEW</span>
+        <h3>採用プロセス全体を<br>1つのシステムで管理</h3>
+        <p>応募の受付からAI面接、スコアリング、内定管理まで。KPIをリアルタイムで把握し、ポジションごとの選考進捗を一画面で確認できます。</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- PIPELINE -->
-<section class="sec-gray" id="pipeline">
-  <div class="sec-inner">
-    <div class="sec-header">
-      <span class="sec-tag">Pipeline</span>
-      <h2 class="sec-title">候補者の選考状況を一覧管理</h2>
-      <p class="sec-desc">応募から入社まで7ステージをカンバンで管理。候補者をクリックすると詳細画面へ遷移し、AI面接への進行もワンクリックで行えます。</p>
+<section class="s s-g" id="pipeline">
+  <div class="s-in">
+    <div class="s-head">
+      <span class="s-tag">Pipeline</span>
+      <h2 class="s-t">候補者の選考状況を一覧管理</h2>
+      <p class="s-sub">応募から入社まで7ステージをカンバンで管理。候補者をクリックすると詳細画面へ遷移し、AI面接への進行もワンクリック。</p>
     </div>
     <div class="g2">
-      <div>
-        <div class="ss"><img src="images/pipeline.png" alt="パイプライン"></div>
-        <p class="ss-label">候補者パイプライン</p>
+      <div class="card">
+        <img class="card-img" src="images/pipeline.png" alt="パイプライン">
+        <div class="card-body">
+          <h3>候補者パイプライン</h3>
+          <p>応募・書類選考・AI面接・最終面接・内定・入社をカンバン形式で管理</p>
+        </div>
       </div>
-      <div>
-        <div class="ss"><img src="images/candidate_detail.png" alt="候補者詳細"></div>
-        <p class="ss-label">候補者詳細</p>
+      <div class="card">
+        <img class="card-img" src="images/candidate_detail.png" alt="候補者詳細">
+        <div class="card-body">
+          <h3>候補者詳細</h3>
+          <p>選考タイムライン・AI面接結果・評価・録画・プロフィールを一画面に集約</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- AI INTERVIEW -->
-<section class="sec-white" id="ai-interview">
-  <div class="sec-inner">
-    <div class="sec-header center">
-      <span class="sec-tag">AI Interview</span>
-      <h2 class="sec-title">AIが面接官として候補者と対話</h2>
-      <p class="sec-desc">AIが面接官となり、自然な対話形式で面接を実施。24時間いつでも受験可能で、日程調整の手間がなくなります。</p>
+<section class="s s-w" id="ai-interview">
+  <div class="s-in">
+    <div class="s-head c">
+      <span class="s-tag">AI Interview</span>
+      <h2 class="s-t">AIが面接官として候補者と対話</h2>
+      <p class="s-sub">AIが面接官となり、自然な対話形式で面接を実施。24時間いつでも受験可能で、日程調整の手間がなくなります。</p>
     </div>
-    <div class="iv-grid">
-      <div class="iv-card">
-        <span class="iv-badge">AI面接官</span>
-        <img class="iv-img" src="images/interviewer1.jpeg" alt="AI面接官1">
+    <div class="iv">
+      <div class="iv-c">
+        <span class="iv-tag">AI面接官</span>
+        <img src="images/interviewer1.jpeg" alt="AI面接官1">
         <h4>基本適性面接</h4>
         <p>自己紹介・前職経験・<br>志望動機・強み弱み</p>
       </div>
-      <div class="iv-card">
-        <span class="iv-badge">AI面接官</span>
-        <img class="iv-img" src="images/interviewer2.png" alt="AI面接官2">
+      <div class="iv-c">
+        <span class="iv-tag">AI面接官</span>
+        <img src="images/interviewer2.png" alt="AI面接官2">
         <h4>課題解決力面接</h4>
         <p>ケース問題・成功事例・<br>チームMG・リーダーシップ</p>
       </div>
-      <div class="iv-card">
-        <span class="iv-badge">AI面接官</span>
-        <img class="iv-img" src="images/interviewer3.png" alt="AI面接官3">
+      <div class="iv-c">
+        <span class="iv-tag">AI面接官</span>
+        <img src="images/interviewer3.png" alt="AI面接官3">
         <h4>技術面接</h4>
         <p>技術スキル・設計思想・<br>問題解決アプローチ</p>
       </div>
     </div>
-    <p style="text-align:center;font-size:13px;color:var(--text3);margin-top:32px;">質問内容・評価基準・合格ラインはポジションごとにカスタマイズ可能</p>
+    <p style="text-align:center;font-size:13px;color:var(--t3);margin-top:40px;">質問内容・評価基準・合格ラインはポジションごとにカスタマイズ可能</p>
   </div>
 </section>
 
 <!-- POSITION -->
-<section class="sec-gray" id="position">
-  <div class="sec-inner">
-    <div class="row row-reverse">
-      <div class="col-text">
-        <div class="sec-header">
-          <span class="sec-tag">Position</span>
-          <h2 class="sec-title">ポジションごとに<br>選考フローを自由に設計</h2>
-          <p class="sec-desc">職種に応じて選考ステップを柔軟にカスタマイズ。AI面接のシナリオや評価基準もポジション単位で設定できます。</p>
-        </div>
+<section class="s s-c">
+  <div class="s-in">
+    <div class="card-h" style="background:var(--gray);">
+      <div class="card-content">
+        <span class="tag-sm">POSITION</span>
+        <h3>ポジションごとに<br>選考フローを自由に設計</h3>
+        <p>職種に応じて選考ステップを柔軟にカスタマイズ。AI面接のシナリオや評価基準もポジション単位で設定できます。</p>
       </div>
-      <div class="col-visual">
-        <div class="g2">
-          <div>
-            <div class="ss"><img src="images/position_list.png" alt="ポジション一覧"></div>
-            <p class="ss-label">ポジション一覧</p>
-          </div>
-          <div>
-            <div class="ss"><img src="images/position_detail.png" alt="ポジション詳細"></div>
-            <p class="ss-label">ポジション詳細</p>
-          </div>
+      <div class="card-img-wrap">
+        <img src="images/position_detail.png" alt="ポジション詳細">
+      </div>
+    </div>
+    <div style="margin-top:32px;">
+      <div class="card-h">
+        <div class="card-img-wrap">
+          <img src="images/position_list.png" alt="ポジション一覧">
+        </div>
+        <div class="card-content">
+          <span class="tag-sm">CUSTOMIZABLE</span>
+          <h3>営業もエンジニアも、<br>最適なフローで選考</h3>
+          <p>書類選考・技術テスト・AI面接・最終面接を自由に組み合わせ。合否基準や自動通知もポジション単位で設定可能です。</p>
         </div>
       </div>
     </div>
@@ -426,108 +386,113 @@
 </section>
 
 <!-- EVALUATION -->
-<section class="sec-dark" id="evaluation">
-  <div class="sec-inner">
-    <div class="sec-header">
-      <span class="sec-tag">Evaluation</span>
-      <h2 class="sec-title">AI面接の設定から評価結果まで</h2>
-      <p class="sec-desc">質問内容・評価基準を自由にカスタマイズ。AI面接後は5つの評価軸でスコアリングされた結果と改善点が自動生成されます。</p>
+<section class="s s-d" id="evaluation">
+  <div class="s-in">
+    <div class="s-head">
+      <span class="s-tag">Evaluation</span>
+      <h2 class="s-t">AI面接の設定から評価結果まで</h2>
+      <p class="s-sub">質問内容・評価基準を自由にカスタマイズ。5つの評価軸でスコアリングされた結果と改善点が自動生成されます。</p>
     </div>
     <div class="g2" style="margin-bottom:48px;">
-      <div>
-        <div class="ss"><img src="images/scenario_setting.png" alt="シナリオ設定"></div>
-        <p class="ss-label">AI面接シナリオ設定</p>
+      <div class="card">
+        <img class="card-img" src="images/scenario_setting.png" alt="シナリオ設定">
+        <div class="card-body">
+          <h3>AI面接シナリオ設定</h3>
+          <p>質問リスト・評価項目・ウェイト・合格ラインを自由に設定</p>
+        </div>
       </div>
-      <div>
-        <div class="ss"><img src="images/evaluation.png" alt="評価結果"></div>
-        <p class="ss-label">AI評価結果（5軸レーダーチャート）</p>
+      <div class="card">
+        <img class="card-img" src="images/evaluation.png" alt="評価結果">
+        <div class="card-body">
+          <h3>AI評価結果</h3>
+          <p>5軸レーダーチャートで100点満点のスコアリング。良い点・改善点も自動生成</p>
+        </div>
       </div>
     </div>
-    <div class="g2" style="gap:40px;">
-      <div>
-        <div class="fr">
-          <div class="fr-icon">&#9881;&#65039;</div>
-          <div><h3>質問・評価基準をカスタマイズ</h3><p>質問リスト・評価項目・ウェイト・合格ラインを自由に設定。</p></div>
-        </div>
-        <div class="fr">
-          <div class="fr-icon">&#128202;</div>
-          <div><h3>5軸で自動スコアリング</h3><p>明瞭性・語彙力・論理性・対話力・態度マナーで100点満点評価。</p></div>
-        </div>
+    <div class="g2" style="gap:24px;">
+      <div class="ic">
+        <span class="ic-i">&#9881;&#65039;</span>
+        <h3>質問・評価基準をカスタマイズ</h3>
+        <p>質問リスト・評価項目・ウェイト・合格ラインを自由に設定。</p>
       </div>
-      <div>
-        <div class="fr">
-          <div class="fr-icon">&#128172;</div>
-          <div><h3>良い点・改善点を自動生成</h3><p>AIが面接内容を分析し、フィードバックを自動で作成。</p></div>
-        </div>
-        <div class="fr">
-          <div class="fr-icon">&#127908;</div>
-          <div><h3>音声・映像評価にも対応</h3><p>テキストに加え、音声・映像での多角的評価が可能。</p></div>
-        </div>
+      <div class="ic">
+        <span class="ic-i">&#128202;</span>
+        <h3>5軸で自動スコアリング</h3>
+        <p>明瞭性・語彙力・論理性・対話力・態度マナーで100点満点評価。</p>
+      </div>
+      <div class="ic">
+        <span class="ic-i">&#128172;</span>
+        <h3>良い点・改善点を自動生成</h3>
+        <p>AIが面接内容を分析し、フィードバックを自動で作成。</p>
+      </div>
+      <div class="ic">
+        <span class="ic-i">&#127908;</span>
+        <h3>音声・映像評価にも対応</h3>
+        <p>テキストに加え、音声・映像での多角的評価が可能。</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- FEATURES -->
-<section class="sec-white" id="features">
-  <div class="sec-inner">
-    <div class="sec-header">
-      <span class="sec-tag">Flow & Features</span>
-      <h2 class="sec-title">職種に応じた選考フロー例</h2>
+<section class="s s-w" id="features">
+  <div class="s-in">
+    <div class="s-head">
+      <span class="s-tag">Flow & Features</span>
+      <h2 class="s-t">職種に応じた選考フロー</h2>
     </div>
 
-    <div style="margin-bottom:24px;">
-      <p style="font-size:14px;font-weight:700;margin-bottom:10px;">営業マネージャー</p>
+    <div style="margin-bottom:28px;">
+      <p style="font-size:15px;font-weight:700;margin-bottom:12px;">営業マネージャー</p>
       <div class="flow">
-        <div class="flow-s fl-g">書類選考</div>
-        <div class="flow-s fl-c1">1次AI面接<small>基本適性</small></div>
-        <div class="flow-s fl-c1">2次AI面接<small>課題解決力</small></div>
-        <div class="flow-s fl-c2">最終面接</div>
-        <div class="flow-s fl-gr">内定</div>
+        <div class="fl fl-0">書類選考</div>
+        <div class="fl fl-1">1次AI面接<small>基本適性</small></div>
+        <div class="fl fl-1">2次AI面接<small>課題解決力</small></div>
+        <div class="fl fl-2">最終面接</div>
+        <div class="fl fl-3">内定</div>
       </div>
     </div>
-
-    <div style="margin-bottom:56px;">
-      <p style="font-size:14px;font-weight:700;margin-bottom:10px;">Webエンジニア</p>
+    <div style="margin-bottom:64px;">
+      <p style="font-size:15px;font-weight:700;margin-bottom:12px;">Webエンジニア</p>
       <div class="flow">
-        <div class="flow-s fl-g">書類選考</div>
-        <div class="flow-s fl-g">技術テスト</div>
-        <div class="flow-s fl-c1">AI面接</div>
-        <div class="flow-s fl-c2">最終面接</div>
-        <div class="flow-s fl-gr">内定</div>
+        <div class="fl fl-0">書類選考</div>
+        <div class="fl fl-0">技術テスト</div>
+        <div class="fl fl-1">AI面接</div>
+        <div class="fl fl-2">最終面接</div>
+        <div class="fl fl-3">内定</div>
       </div>
-      <p style="font-size:12px;color:var(--text3);margin-top:10px;">&#8251; フローの構成・AI面接の回数はポジション単位で自由にカスタマイズ可能</p>
+      <p style="font-size:13px;color:var(--t3);margin-top:12px;">&#8251; フローの構成・AI面接の回数はポジション単位で自由にカスタマイズ可能</p>
     </div>
 
-    <h3 style="font-size:20px;font-weight:700;margin-bottom:24px;">その他の主な機能</h3>
+    <h3 style="font-size:24px;font-weight:800;margin-bottom:32px;">その他の主な機能</h3>
     <div class="g3">
-      <div class="fc">
-        <span class="fc-icon">&#128200;</span>
+      <div class="ic">
+        <span class="ic-i">&#128200;</span>
         <h3>採用分析</h3>
         <p>応募数推移・選考ファネル・スコア分布など、採用データを多角的に分析</p>
       </div>
-      <div class="fc">
-        <span class="fc-icon">&#128197;</span>
+      <div class="ic">
+        <span class="ic-i">&#128197;</span>
         <h3>面接カレンダー</h3>
         <p>面接日程を一元管理。候補者・面接官のスケジュールを可視化</p>
       </div>
-      <div class="fc">
-        <span class="fc-icon">&#128279;</span>
+      <div class="ic">
+        <span class="ic-i">&#128279;</span>
         <h3>求人媒体連携</h3>
         <p>外部求人媒体からの応募者データを自動取込</p>
       </div>
-      <div class="fc">
-        <span class="fc-icon">&#9993;</span>
+      <div class="ic">
+        <span class="ic-i">&#9993;</span>
         <h3>メール設定</h3>
         <p>選考ステージに応じた自動通知・メールテンプレート管理</p>
       </div>
-      <div class="fc">
-        <span class="fc-icon">&#128101;</span>
+      <div class="ic">
+        <span class="ic-i">&#128101;</span>
         <h3>応募者管理</h3>
         <p>候補者情報の検索・フィルタ・CSV一括取込に対応</p>
       </div>
-      <div class="fc">
-        <span class="fc-icon">&#127919;</span>
+      <div class="ic">
+        <span class="ic-i">&#127919;</span>
         <h3>内定管理</h3>
         <p>オファーから入社手続きまでシームレスに管理</p>
       </div>
@@ -539,17 +504,15 @@
 <div class="cta" id="contact">
   <h2>まずはデモでお試しください</h2>
   <p>貴社の採用フローに合わせたデモをご用意いたします。</p>
-  <a href="#" class="btn-primary" style="padding:16px 48px;font-size:16px;">デモのお申し込み</a>
+  <a href="#" class="btn-l btn-fill" style="font-size:17px;">デモのお申し込み</a>
 </div>
 
-<footer>
-  <p>&copy; 2026 DeepAI Inc. All rights reserved.</p>
-</footer>
+<footer><p>&copy; 2026 DeepAI Inc. All rights reserved.</p></footer>
 
 <script>
-function closeMenu() {
-  document.querySelector('.hamburger').classList.remove('open');
-  document.querySelector('.n-links').classList.remove('open');
+function closeMenu(){
+  document.querySelector('.ham').classList.remove('open');
+  document.querySelector('.n-right').classList.remove('open');
 }
 </script>
 </body>
